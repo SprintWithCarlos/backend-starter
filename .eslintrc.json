@@ -5,13 +5,15 @@
         "jest/globals": true
     },
     "extends": [
-        "airbnb-base"
+        "airbnb-base",
+        "plugin:jest/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": "latest",
-        "sourceType": "module"
+      "ecmaVersion": "latest",
+      "project": "tsconfig.json"
     },
+    
     "plugins": [
         "@typescript-eslint",
         "jest"
@@ -25,6 +27,7 @@
     
     "rules": {
         "no-console": "off",
+        "comma-dangle": "off",
         "quotes": "off",
         "import/prefer-default-export": "off",
         "import/extensions": [

@@ -1,10 +1,10 @@
-import type { Config } from "@jest/types";
-
-const config: Config.InitialOptions = {
+/** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
+module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
   verbose: true,
-  // collectCoverage: true,
+  moduleFileExtensions: ["ts", "tsx", "js"],
+  collectCoverage: true,
   testTimeout: 20000,
   coverageThreshold: {
     global: {
@@ -13,9 +13,10 @@ const config: Config.InitialOptions = {
       lines: 100,
     },
   },
-
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
+  transform: {
+    "^.+\\.(ts|tsx)$": "ts-jest",
+  },
 };
-export default config;

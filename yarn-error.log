@@ -1,11 +1,11 @@
 Arguments: 
-  /Users/LeanLawyering/.nvm/versions/node/v18.4.0/bin/node /usr/local/Cellar/yarn/1.22.15/libexec/bin/yarn.js add eslint-plugin-typescript-eslint -D
+  /Users/LeanLawyering/.nvm/versions/node/v18.4.0/bin/node /usr/local/Cellar/yarn/1.22.19/libexec/bin/yarn.js add yamls swagger-ui-express
 
 PATH: 
-  /Users/LeanLawyering/dev/google-cloud-sdk/bin:/Users/LeanLawyering/Library/android/sdk/platform-tools/:/Users/LeanLawyering/Library/android/sdk/emulator/:/Users/LeanLawyering/Library/android/sdk/cmdline-tools/tools/bin/:/Users/LeanLawyering/.nvm/versions/node/v18.4.0/bin:/Users/LeanLawyering/bin:/usr/local/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/opt/X11/bin:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/LeanLawyering/dev/google-cloud-sdk/bin:/Users/LeanLawyering/Library/android/sdk/platform-tools/:/Users/LeanLawyering/Library/android/sdk/emulator/:/Users/LeanLawyering/Library/android/sdk/cmdline-tools/tools/bin/:/Users/LeanLawyering/.nvm/versions/node/v18.4.0/bin:/Users/LeanLawyering/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/Users/LeanLawyering/.cargo/bin:/usr/local/node/bin:/Users/LeanLawyering/flutter/bin:/Users/LeanLawyering/.rvm/bin:/usr/local/node/bin:/Users/LeanLawyering/flutter/bin
+  /Users/LeanLawyering/.nvm/versions/node/v18.4.0/bin:/Users/LeanLawyering/.bun/bin:/Users/LeanLawyering/bin:/usr/local/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/opt/X11/bin:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/LeanLawyering/.nvm/versions/node/v18.4.0/bin:/Users/LeanLawyering/.bun/bin:/Users/LeanLawyering/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/Users/LeanLawyering/.cargo/bin:/Users/LeanLawyering/.rvm/bin
 
 Yarn version: 
-  1.22.15
+  1.22.19
 
 Node version: 
   18.4.0
@@ -14,13 +14,13 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.npmjs.org/eslint-plugin-typescript-eslint: Not found
-      at params.callback [as _callback] (/usr/local/Cellar/yarn/1.22.15/libexec/lib/cli.js:67031:18)
-      at self.callback (/usr/local/Cellar/yarn/1.22.15/libexec/lib/cli.js:140885:22)
+  Error: https://registry.npmjs.org/yamls: Not found
+      at params.callback [as _callback] (/usr/local/Cellar/yarn/1.22.19/libexec/lib/cli.js:66145:18)
+      at self.callback (/usr/local/Cellar/yarn/1.22.19/libexec/lib/cli.js:140890:22)
       at Request.emit (node:events:537:28)
-      at Request.<anonymous> (/usr/local/Cellar/yarn/1.22.15/libexec/lib/cli.js:141857:10)
+      at Request.<anonymous> (/usr/local/Cellar/yarn/1.22.19/libexec/lib/cli.js:141862:10)
       at Request.emit (node:events:537:28)
-      at IncomingMessage.<anonymous> (/usr/local/Cellar/yarn/1.22.15/libexec/lib/cli.js:141779:12)
+      at IncomingMessage.<anonymous> (/usr/local/Cellar/yarn/1.22.19/libexec/lib/cli.js:141784:12)
       at Object.onceWrapper (node:events:651:28)
       at IncomingMessage.emit (node:events:549:35)
       at endReadableNT (node:internal/streams/readable:1359:12)
@@ -77,7 +77,6 @@ npm manifest:
       "@types/morgan": "^1.9.3",
       "@types/node": "^17.0.35",
       "@types/supertest": "^2.0.12",
-      "@typescript-eslint/eslint-plugin": "^5.29.0",
       "@typescript-eslint/parser": "^5.29.0",
       "eslint": "^8.18.0",
       "eslint-config-airbnb-base": "^15.0.0",
@@ -966,21 +965,6 @@ Lockfile:
     dependencies:
       "@types/yargs-parser" "*"
   
-  "@typescript-eslint/eslint-plugin@^5.29.0":
-    version "5.30.0"
-    resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-5.30.0.tgz#524a11e15c09701733033c96943ecf33f55d9ca1"
-    integrity sha512-lvhRJ2pGe2V9MEU46ELTdiHgiAFZPKtLhiU5wlnaYpMc2+c1R8fh8i80ZAa665drvjHKUJyRRGg3gEm1If54ow==
-    dependencies:
-      "@typescript-eslint/scope-manager" "5.30.0"
-      "@typescript-eslint/type-utils" "5.30.0"
-      "@typescript-eslint/utils" "5.30.0"
-      debug "^4.3.4"
-      functional-red-black-tree "^1.0.1"
-      ignore "^5.2.0"
-      regexpp "^3.2.0"
-      semver "^7.3.7"
-      tsutils "^3.21.0"
-  
   "@typescript-eslint/parser@^5.10.0", "@typescript-eslint/parser@^5.29.0":
     version "5.30.0"
     resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-5.30.0.tgz#a2184fb5f8ef2bf1db0ae61a43907e2e32aa1b8f"
@@ -998,15 +982,6 @@ Lockfile:
     dependencies:
       "@typescript-eslint/types" "5.30.0"
       "@typescript-eslint/visitor-keys" "5.30.0"
-  
-  "@typescript-eslint/type-utils@5.30.0":
-    version "5.30.0"
-    resolved "https://registry.yarnpkg.com/@typescript-eslint/type-utils/-/type-utils-5.30.0.tgz#98f3af926a5099153f092d4dad87148df21fbaae"
-    integrity sha512-GF8JZbZqSS+azehzlv/lmQQ3EU3VfWYzCczdZjJRxSEeXDQkqFhCBgFhallLDbPwQOEQ4MHpiPfkjKk7zlmeNg==
-    dependencies:
-      "@typescript-eslint/utils" "5.30.0"
-      debug "^4.3.4"
-      tsutils "^3.21.0"
   
   "@typescript-eslint/types@5.30.0":
     version "5.30.0"
@@ -1026,7 +1001,7 @@ Lockfile:
       semver "^7.3.7"
       tsutils "^3.21.0"
   
-  "@typescript-eslint/utils@5.30.0", "@typescript-eslint/utils@^5.10.0":
+  "@typescript-eslint/utils@^5.10.0":
     version "5.30.0"
     resolved "https://registry.yarnpkg.com/@typescript-eslint/utils/-/utils-5.30.0.tgz#1dac771fead5eab40d31860716de219356f5f754"
     integrity sha512-0bIgOgZflLKIcZsWvfklsaQTM3ZUbmtH0rJ1hKyV3raoUYyeZwcjQ8ZUJTzS7KnhNcsVT1Rxs7zeeMHEhGlltw==

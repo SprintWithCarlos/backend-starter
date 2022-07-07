@@ -2,7 +2,9 @@
 /* eslint-disable comma-dangle */
 /* eslint-disable function-paren-newline */
 /* eslint-disable implicit-arrow-linebreak */
-import express, { Response, Application, Request, NextFunction } from "express";
+import express, {
+  Response, Application, Request, NextFunction
+} from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
@@ -12,6 +14,7 @@ import swaggerUI from "swagger-ui-express";
 
 class App {
   app: Application = express();
+
   swaggerDocument = YAML.load(path.join(__dirname, "./public/openapi.yml"));
 
   constructor() {
@@ -26,6 +29,7 @@ class App {
     this.app.use(helmet());
     this.app.use(morgan("dev"));
   }
+
   swaggerUI() {
     this.app.use(
       "/api-docs",
@@ -40,12 +44,8 @@ class App {
   }
 
   routes() {
-    this.app.get("/home", (req: Request, res: Response) =>
-      res.send("Hello World")
-    );
-    this.app.get("/json", (req: Request, res: Response) =>
-      res.json({ message: "OK" })
-    );
+    this.app.get("/home", (req: Request, res: Response) => res.send("Hello World"));
+    this.app.get("/json", (req: Request, res: Response) => res.json({ message: "OK" }));
     this.app.post("/get-request-body", (req: Request, res: Response) =>
       res.json({ body: { ...req.body } })
     );
@@ -56,9 +56,7 @@ class App {
       ) {
         res.status(401).json({ error: "You are not authenticated" });
       } else {
-        res
-          .status(200)
-          .json({ token: req.headers.authorization.split(" ").pop() });
+        res.status(200).json({ token: req.headers.authorization.split(" ").pop() });
       }
     });
   }

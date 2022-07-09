@@ -1,9 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable class-methods-use-this */
 
-import {
-  createLogger, format, transports,
-} from "winston";
+import { createLogger, format, transports } from "winston";
 
 const {
   json, combine, timestamp, printf, label, colorize
@@ -19,18 +17,17 @@ export class LoggerBuilder {
       level: "info",
       format: json(),
       defaultMeta: { service: "user-service" },
-      transports: [
-        new transports.File({ filename: "./error.log", level: "error" }),
-
-      ],
+      transports: [new transports.File({ filename: "./error.log", level: "error" })]
     });
     return logger;
   };
 
   private LoggerDev = () => {
-    const myFormat = printf(({
-      level, message, label, timestamp
-    }) => `${timestamp} [${label}] ${level}: ${message}`);
+    const myFormat = printf(
+      ({
+        level, message, label, timestamp
+      }) => `${timestamp} [${label}] ${level}: ${message}`
+    );
 
     const logger = createLogger({
       level: "debug",
@@ -41,9 +38,7 @@ export class LoggerBuilder {
         myFormat
       ),
       defaultMeta: { service: "user-service" },
-      transports: [
-        new transports.Console(),
-      ],
+      transports: [new transports.Console()]
     });
     return logger;
   };

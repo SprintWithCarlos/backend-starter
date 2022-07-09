@@ -1,16 +1,13 @@
-import mock from 'mock-fs';
+import mock from "mock-fs";
 import { faker } from "@faker-js/faker";
-import { Logger } from 'winston';
-import path from 'path';
-import { readFileSync } from 'fs';
+import { Logger } from "winston";
+import path from "path";
+import { readFileSync } from "fs";
 import { LoggerBuilder } from "./index";
 
 const generateRandomLogMessage = () => faker.hacker.phrase();
 let logMessage: string;
-const buildLogger = (
-  env: string
-):
-Logger => {
+const buildLogger = (env: string): Logger => {
   const loggerBuilder = new LoggerBuilder();
   const logger = loggerBuilder.build(env);
   return logger;
@@ -21,7 +18,7 @@ describe("Test LoggerBuilder", () => {
     logMessage = generateRandomLogMessage();
     jsonString += `{"level":"error","message":"${logMessage}","service":"user-service"}\n`;
     mock({
-      node_modules: mock.load(path.resolve(__dirname, '../node_modules')),
+      node_modules: mock.load(path.resolve(__dirname, "../node_modules"))
     });
   });
 
@@ -30,7 +27,7 @@ describe("Test LoggerBuilder", () => {
   });
   it("should log to console", async () => {
     const logger = buildLogger("development");
-    const spy = jest.spyOn(logger, 'info');
+    const spy = jest.spyOn(logger, "info");
     logger.info(logMessage);
     expect(spy).toHaveBeenCalled();
     expect(spy).toHaveBeenCalledWith(logMessage);
@@ -52,22 +49,18 @@ describe("Test LoggerBuilder", () => {
     const content = readFileSync(file, "utf-8");
     const array = JSON.parse(`[${content.replace(/\n/g, ",").slice(0, -1)}]`);
     expect(array).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ message: logMessage }),
-      ])
+      expect.arrayContaining([expect.objectContaining({ message: logMessage })])
     );
   });
   it("should include only error messages in error log", async () => {
     const logger = buildLogger("production");
     logger.info(logMessage);
-    mock({ "error.log": jsonString, });
+    mock({ "error.log": jsonString });
     const file = `${process.cwd()}/error.log`;
     const content = readFileSync(file, "utf-8");
     const array = JSON.parse(`[${content.replace(/\n/g, ",").slice(0, -1)}]`);
     expect(array).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ message: logMessage }),
-      ])
+      expect.arrayContaining([expect.objectContaining({ message: logMessage })])
     );
   });
 });

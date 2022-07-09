@@ -1,57 +1,73 @@
+import mock from 'mock-fs';
 import { faker } from "@faker-js/faker";
-import supertest, { SuperTest, Test } from "supertest";
+import { Logger } from 'winston';
+import path from 'path';
+import { readFileSync } from 'fs';
+import { LoggerBuilder } from "./index";
 
-import expressApp from "@/app";
-
-describe("Test endpoints", () => {
-  let token: string;
-  let request: SuperTest<Test>;
-  beforeAll(() => {
-    request = supertest(expressApp.app);
-  });
+const generateRandomLogMessage = () => faker.hacker.phrase();
+let logMessage: string;
+const buildLogger = (
+  env: string
+):
+Logger => {
+  const loggerBuilder = new LoggerBuilder();
+  const logger = loggerBuilder.build(env);
+  return logger;
+};
+let jsonString: string = "";
+describe("Test LoggerBuilder", () => {
   beforeEach(() => {
-    token = faker.datatype.uuid();
+    logMessage = generateRandomLogMessage();
+    jsonString += `{"level":"error","message":"${logMessage}","service":"user-service"}\n`;
+    mock({
+      node_modules: mock.load(path.resolve(__dirname, '../node_modules')),
+    });
   });
 
-  describe("Primary course", () => {
-    it("should return 'Hello World' from GET /home", async () => {
-      const result = await request.get("/home");
-      expect(result.status).toBe(200);
-      expect(result.text).toBe("Hello World");
-    });
-    it("should return json message from GET /json", async () => {
-      const result = await request.get("/json");
-      expect(result.text).toBe(JSON.stringify({ message: "OK" }));
-    });
-    it("should return body request from POST /get-request-body", async () => {
-      const props = {
-        name: `${faker.name.firstName} ${faker.name.lastName}`,
-        email: faker.internet.email
-      };
-      const result = await request.post("/get-request-body").send(props);
-      expect(result.status).toBe(200);
-      expect(result.text).toBe(JSON.stringify({ body: { name: props.name, email: props.email } }));
-    });
-    it("should return token from POST /get-auth", async () => {
-      const result = await request.post("/get-auth").set("Authorization", `Bearer ${token}`);
-      expect(result.status).toBe(200);
-      expect(result.text).toBe(JSON.stringify({ token }));
-    });
+  afterAll(() => {
+    mock.restore();
   });
-  describe("Exception course", () => {
-    it("should return 404 for unknown endpoint", async () => {
-      const result = await request.get("/unknown");
-      expect(result.status).toBe(404);
-    });
-    it("should return 401 if no header is set from POST /get-auth", async () => {
-      const result = await request.post("/get-auth");
-      expect(result.status).toBe(401);
-      expect(result.text).toBe(JSON.stringify({ error: "You are not authenticated" }));
-    });
-    it("should return 401 if no token from POST /get-auth", async () => {
-      const result = await request.post("/get-auth").set("Authorization", "Bearer");
-      expect(result.status).toBe(401);
-      expect(result.text).toBe(JSON.stringify({ error: "You are not authenticated" }));
-    });
+  it("should log to console", async () => {
+    const logger = buildLogger("development");
+    const spy = jest.spyOn(logger, 'info');
+    logger.info(logMessage);
+    expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalledWith(logMessage);
+  });
+
+  it("should return 'level: info' when environmentLevel is 'production'", async () => {
+    const logger = buildLogger("production");
+    expect(logger.level).toBe("info");
+  });
+  it("should return 'level: debug' when environmentLevel is 'development'", async () => {
+    const logger = buildLogger("development");
+    expect(logger.level).toBe("debug");
+  });
+  it("should return an array containing an object containing the error message sent", async () => {
+    const logger = buildLogger("production");
+    logger.error(logMessage);
+    mock({ "error.log": jsonString });
+    const file = `${process.cwd()}/error.log`;
+    const content = readFileSync(file, "utf-8");
+    const array = JSON.parse(`[${content.replace(/\n/g, ",").slice(0, -1)}]`);
+    expect(array).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ message: logMessage }),
+      ])
+    );
+  });
+  it("should include only error messages in error log", async () => {
+    const logger = buildLogger("production");
+    logger.info(logMessage);
+    mock({ "error.log": jsonString, });
+    const file = `${process.cwd()}/error.log`;
+    const content = readFileSync(file, "utf-8");
+    const array = JSON.parse(`[${content.replace(/\n/g, ",").slice(0, -1)}]`);
+    expect(array).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ message: logMessage }),
+      ])
+    );
   });
 });

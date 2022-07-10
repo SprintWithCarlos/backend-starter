@@ -25,7 +25,7 @@ describe("Test LoggerBuilder", () => {
   beforeEach(() => {
     logMessage = generateRandomLogMessage();
     mock({
-      node_modules: mock.load(path.resolve(__dirname, "../node_modules")),
+      node_modules: mock.load(path.resolve(__dirname, "../node_modules"))
     });
   });
   afterEach(() => {
@@ -66,9 +66,7 @@ describe("Test LoggerBuilder", () => {
     const content = readFileSync(file, "utf-8");
     const array = JSON.parse(`[${content.replace(/\n/g, ",").slice(0, -1)}]`);
     expect(array).toEqual(
-      expect.arrayContaining([
-        expect.not.objectContaining({ message: logMessage }),
-      ])
+      expect.arrayContaining([expect.not.objectContaining({ message: logMessage })])
     );
   });
 });
@@ -93,9 +91,7 @@ describe("Test real log file", () => {
     const content = (await promisedLog()) as string;
     const array = JSON.parse(`[${content.replace(/\n/g, ",").slice(0, -1)}]`);
     expect(array).toEqual(
-      expect.arrayContaining([
-        expect.not.objectContaining({ message: logMessage }),
-      ])
+      expect.arrayContaining([expect.not.objectContaining({ message: logMessage })])
     );
   });
 });
